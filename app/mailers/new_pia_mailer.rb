@@ -2,7 +2,11 @@ class NewPiaMailer < ApplicationMailer
   def receive(email)
 #    myEmail = Hash.from_xml(data)["form"]["Email"]
     data = email.body.to_s.tr('&', '')
-    myEmail = /Email: (.*)\n/.match(data)[1]
+#    myEmail = /Email: (.*)\n/.match(data)[1]
+    myEmail = data.scan(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i)
+    if(myEmail.length > 1)
+      myEmail = myEmail[1]
+    end
     newPia = domain(999, delimiter='-')
     pwdSelect = random_seed % passwords.length
 
