@@ -10,17 +10,17 @@ class NewPiaMailer < ApplicationMailer
     newPia = domain(999, delimiter='-')
     pwdSelect = random_seed % passwords.length
 
-    retVal = ""
-    cnt = 0
-    while (retVal.delete("\s") == "" || cnt < 5) do
+#    retVal = ""
+#    cnt = 0
+#    while (retVal.delete("\s") == "" || cnt < 5) do
       cmd = "/home/user/docker/oyd-pia/build.sh"
       cmd += " --load-image=oydeu/oyd-pia"
       cmd += " --name=" + newPia
       cmd += " --vault-personal"
       cmd += " --password=" + password_hashes[pwdSelect]
       retVal =  `#{cmd}`
-      cnt = cnt +1
-    end
+#      cnt = cnt +1
+#    end
     url = "https://#{newPia}.datentresor.org"
     password = passwords[pwdSelect]
     PiaMailer.pia_created(myEmail, url, password).deliver
