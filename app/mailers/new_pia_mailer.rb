@@ -1,5 +1,6 @@
 class NewPiaMailer < ApplicationMailer
-  def receive(email)
+ def receive(email)
+  begin 
 #    myEmail = Hash.from_xml(data)["form"]["Email"]
     data = email.body.to_s.tr('&', '')
 #    myEmail = /Email: (.*)\n/.match(data)[1]
@@ -10,6 +11,10 @@ class NewPiaMailer < ApplicationMailer
     newPia = domain(999, delimiter='-')
     pwdSelect = random_seed % passwords.length
 
+    Rails.logger.error "Email: " + myEmail.to_s
+    Rails.logger.error "Name: " + newPia
+    Rails.logger.flush
+
 #    retVal = ""
 #    cnt = 0
 #    while (retVal.delete("\s") == "" || cnt < 5) do
@@ -18,14 +23,34 @@ class NewPiaMailer < ApplicationMailer
       cmd += " --name=" + newPia
       cmd += " --vault-personal"
       cmd += " --password=" + password_hashes[pwdSelect]
+
+    Rails.logger.error DateTime.now.to_s + " run: " + cmd.to_s
+    Rails.logger.flush
+
       retVal =  `#{cmd}`
 #      cnt = cnt +1
 #    end
+
+    Rails.logger.error "Container gestartet"
+    Rails.logger.error retVal.to_s
+    Rails.logger.flush
+
     url = "https://#{newPia}.datentresor.org"
     password = passwords[pwdSelect]
     PiaMailer.pia_created(myEmail, url, password).deliver
+    Rails.logger.error "Info: Email an Absender geschickt"
+    Rails.logger.flush
+
     PiaMailer.pia_created("backup@ownyourdata.eu", url, "").deliver
+    Rails.logger.error "Info an Backup geschickt"
+    Rails.logger.flush
+  rescue => e
+    Rails.logger.error "====ERROR===="
+    Rails.logger.error e.message
+    Rails.logger.error e.backtrace.join("\n")
+    Rails.logger.flush
   end
+ end
 
     # from https://github.com/usmanbashir/haikunator/blob/master/lib/haikunator.rb
     def domain(token_range, delimiter)
