@@ -1,11 +1,13 @@
 # <img src="https://github.com/OwnYourData/service-pia_setup/raw/master/app/assets/images/service.png" width="92"> PIA Setup Service
-service description    
+Fordert ein Benutzer auf https://www.ownyourdata.eu einen neuen Datentresor (interner Name PIA = Private Information Archive) an, startet dieses Service einen neuen Docker Container, initialisert den Datentresor und verschickt die Zugangsdaten via Email. Ebenfalls wird der neue Datentresor im [Archiv Sevice](https://github.com/OwnYourData/service-archive) hinzugefügt.    
+
+&nbsp;    
 
 ## Installation
-text    
+Die Rails App muss mit folgendem Befehl installiert werden:    
+```bundle install```    
 
-## Datenstruktur
-Die folgenden Listen werden verwendet:    
+&nbsp;    
 
 ## Verbessere das PIA Setup Service
 
