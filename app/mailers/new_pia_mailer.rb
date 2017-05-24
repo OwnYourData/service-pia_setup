@@ -21,7 +21,7 @@ class NewPiaMailer < ApplicationMailer
       cmd = "/home/user/docker/oyd-pia/build.sh"
       cmd += " --load-image=oydeu/oyd-pia"
       cmd += " --name=" + newPia
-      cmd += " --email=" + myEmail
+      cmd += " --email=" + myEmail.to_s
       cmd += " --vault-personal"
       cmd += " --password=" + password_hashes[pwdSelect]
 
