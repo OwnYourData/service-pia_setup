@@ -8,6 +8,9 @@ class NewPiaMailer < ApplicationMailer
     if(myEmail.length > 1)
       myEmail = myEmail[1]
     end
+    if myEmail.kind_od?(Array)
+      myEmail = myEmail.first
+    end 
     newPia = domain(999, delimiter='-')
     pwdSelect = random_seed % passwords.length
 
